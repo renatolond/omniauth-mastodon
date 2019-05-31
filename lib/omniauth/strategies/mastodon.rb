@@ -17,7 +17,11 @@ module OmniAuth
         token_url: '/oauth/token'
       }
 
-      uid { raw_info['id'] }
+      uid do
+        domain = raw_info["url"].gsub(/https?:\/\//, "").split("/").first
+        user = raw_info["username"]
+        "#{user}@#{domain}"
+      end
 
       info do
         {
